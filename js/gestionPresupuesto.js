@@ -3,6 +3,8 @@
 
 // TODO: Variable global
 let presupuesto = 0; 
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(p) {
     // TODO
@@ -33,11 +35,7 @@ function CrearGasto(descripcion, valor) {
 
     this.mostrarGasto = function()
     {
-        if(gastoGlob === null){
-            return "No hay gastos registrados.";
-        }
-
-        return "Gasto correspondiente a " + gastoGlob.descripcion + " con valor " + gastoGlob.valor + " €";
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
     }
 
     this.actualizarDescripcion = function(descripcion){
@@ -55,6 +53,25 @@ function CrearGasto(descripcion, valor) {
     }
 }
 
+function listarGastos(){
+
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+    
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -62,5 +79,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance 
 }

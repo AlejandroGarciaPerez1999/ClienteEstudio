@@ -64,12 +64,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         this.etiquetas = [...etiquetas];
     }
 
-    function anyadirEtiquetas(...etiquetas){
+    this.anyadirEtiquetas = function(...etiquetas){
         if(etiquetas.length > 0){
             for(let i = 0; i < etiquetas.length; i++){
                 this.etiquetas = etiquetas[i];
             }
         }
+    }
+
+    this.mostrarGastoCompleto = function(){
+        let fechaDate = new Date(this.fecha);
+        let frase = ("Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n" + 
+                     "Fecha: " + fechaDate.toLocaleString() + "\n" +
+                     "Etiquetas:\n");
+        for(let i = 0; i < this.etiquetas.length; i++){
+            frase += ("- " + this.etiquetas[i] + "\n");
+        }
+        return frase;
     }
     
 }

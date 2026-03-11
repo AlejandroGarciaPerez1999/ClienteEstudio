@@ -21,15 +21,12 @@ function mostrarPresupuesto() {
     return ("Tu presupuesto actual es de " + presupuesto + " €");
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     if (typeof valor !== 'number' || valor < 0) {
         valor = 0;
     }
-    /*let gasto = {
-        descripcion: descripcion,
-        valor: valor
-    };*/
+
     this.descripcion = descripcion;
     this.valor = valor
 
@@ -51,14 +48,40 @@ function CrearGasto(descripcion, valor) {
     }
     this.valor = valor;
     }
+
+    //https://javascript.info/date
+    if(Date.parse(fecha)){
+        this.fecha = Date.parse(fecha);  
+    }
+    else{
+        this.fecha = Date.now();
+    }
+    
+    if(etiquetas.length === 0){
+        this.etiquetas = [];
+    }
+    else{
+        this.etiquetas = [...etiquetas];
+    }
+
+    function anyadirEtiquetas(...etiquetas){
+        if(etiquetas.length > 0){
+            for(let i = 0; i < etiquetas.length; i++){
+                this.etiquetas = etiquetas[i];
+            }
+        }
+    }
+    
 }
 
 function listarGastos(){
-
+    return gastos;
 }
 
-function anyadirGasto(){
-
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    gastos.push(gasto);
+    idGasto++;
 }
 
 function borrarGasto(){
@@ -70,7 +93,7 @@ function calcularTotalGastos(){
 }
 
 function calcularBalance(){
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.

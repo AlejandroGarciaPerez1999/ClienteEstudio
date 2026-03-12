@@ -83,6 +83,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return frase;
     }
     
+    this.actualizarFecha = function(fechaActualizada){
+        if(Date.parse(fechaActualizada)){
+            this.fecha = Date.parse(fechaActualizada);  
+        }
+    }
+
+    
 }
 
 function listarGastos(){

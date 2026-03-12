@@ -110,6 +110,37 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fechaDate = new Date(this.fecha);
+        
+        if(periodo == "anyo"){
+            return fechaDate.getFullYear();
+        }
+        if(periodo == "mes"){
+            if(fechaDate.getMonth() + 1 >= 10){
+                return (fechaDate.getFullYear() + "-" + (fechaDate.getMonth() + 1));
+            }
+            else{
+                return (fechaDate.getFullYear() + "-0" + (fechaDate.getMonth() + 1));
+            }
+            
+        }
+        if(periodo == "dia"){
+            if(fechaDate.getMonth() + 1 < 10 && fechaDate.getDate() < 10){
+               return (fechaDate.getFullYear() + "-0" + (fechaDate.getMonth() + 1) + "-0" + fechaDate.getDate()); 
+            }
+            if(fechaDate.getMonth() + 1 < 10 && !fechaDate.getDate() < 10){
+                return (fechaDate.getFullYear() + "-0" + (fechaDate.getMonth() + 1) + "-" + fechaDate.getDate());
+            }
+            if(!fechaDate.getMonth() + 1 < 10 && fechaDate.getDate() < 10){
+                return (fechaDate.getFullYear() + "-" + (fechaDate.getMonth() + 1) + "-0" + fechaDate.getDate());
+            }
+            if(!fechaDate.getMonth() + 1 < 10 && !fechaDate.getDate() < 10){
+                return (fechaDate.getFullYear() + "-" + (fechaDate.getMonth() + 1) + "-" + fechaDate.getDate());
+            }  
+        }
+    }
 }
 
 function listarGastos(){
@@ -141,6 +172,14 @@ function calcularBalance(){
     return balance;
 }
 
+function filtrarGastos(){
+
+}
+
+function agruparGastos(){
+
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -152,5 +191,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance 
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }

@@ -67,7 +67,16 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.anyadirEtiquetas = function(...etiquetas){
         if(etiquetas.length > 0){
             for(let i = 0; i < etiquetas.length; i++){
-                this.etiquetas = etiquetas[i];
+                let existe = false;
+                for(let j = 0; j < this.etiquetas.length; j++){
+                    if (etiquetas[i] === this.etiquetas[j]) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (!existe) {
+                this.etiquetas.push(etiquetas[i]);
+                }
             }
         }
     }
@@ -89,7 +98,6 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
-    
 }
 
 function listarGastos(){

@@ -197,16 +197,36 @@ function filtrarGastos(objFiltrado){
             arrayFiltrado = arrayFiltrado.filter(item => (item.descripcion.toLowerCase().includes(descBuscada)));
         }
 
-        arrayFiltrado = arrayFiltrado.filter(item => 
-            objFiltrado.etiquetasTiene.every(etiqueta => item.etiquetas.includes(etiqueta))
-        );
-  
+        if (objFiltrado.etiquetasTiene) {
+            arrayFiltrado = arrayFiltrado.filter(item => {
+                return objFiltrado.etiquetasTiene.some(etiqueta => item.etiquetas.includes(etiqueta));
+            })
+        }
         return arrayFiltrado;
 }
 
-function agruparGastos(){
-
+function agruparGastos(periodo, etiquetas = [], fechaDesde, fechaHasta){
+    let obj = {     
+    fechaDesde: fechaDesde,  
+    fechaHasta: fechaHasta,
+    etiquetasTiene: [ ...etiquetas ]        
+    };
+    let gastosFiltrados = filtrarGastos(obj);
+    let acumulado = gastosFiltrados.reduce((acc, gastoActual) => {
+        let periodoAgrupado = gastoActual.obtenerPeriodoAgrupacion(periodo);
+        if (!acc[periodoAgrupado])
+            acc[periodoAgrupado] = gastoActual.valor;
+        else
+            acc[periodoAgrupado] += gastoActual.valor
+        /*if(periodoAgrupado != acc.periodoAgrupado){
+            acc[periodoAgrupado] = 0;
+        }
+        acc[periodoAgrupado] += gastoActual.valor;*/
+        return acc;
+    },{});
+    return acumulado;
 }
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

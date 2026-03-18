@@ -197,36 +197,47 @@ function filtrarGastos(objFiltrado){
             arrayFiltrado = arrayFiltrado.filter(item => (item.descripcion.toLowerCase().includes(descBuscada)));
         }
 
-        // if (objFiltrado.etiquetasTiene) {
+        // if (objFiltrado.etiquetasTiene && objFiltrado.etiquetasTiene.length > 0) {
         //     arrayFiltrado = arrayFiltrado.filter(item => {
         //         return objFiltrado.etiquetasTiene.some(etiqueta => item.etiquetas.includes(etiqueta));
         //     })
         // }
-        if (objFiltrado.etiquetasTiene) {
+        if (objFiltrado.etiquetasTiene && objFiltrado.etiquetasTiene.length > 0) {
             arrayFiltrado = arrayFiltrado.filter(item => {
-                return objFiltrado.etiquetasTiene.some(etiqueta => 
-                    item.etiquetas.some(itemEtiqueta =>
-                        itemEtiqueta.toLowerCase().includes(etiqueta.toLowerCase())
-                    ));
+                return (item.etiquetasTiene.some(etiqueta => 
+                    objFiltrado.etiquetas.some(itemEtiqueta =>
+                        itemEtiqueta.toLowerCase() === etiqueta.toLowerCase()))
+                    );
             })
         }
         return arrayFiltrado;
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-    let obj = {     
-    fechaDesde: fechaDesde,  
-    fechaHasta: fechaHasta//,
-    //etiquetasTiene: etiquetas       
-    };
+    let obj = {};
+    if(etiquetas){
+        obj.etiquetasTiene = [ ...etiquetas ];
+    }
+    if(fechaDesde){
+        obj.fechaDesde = fechaDesde;
+    }
+    if(fechaHasta){
+        obj.fechaHasta = fechaHasta;
+    }
+    
+    // obj = {     
+    // fechaDesde: fechaDesde,  
+    // fechaHasta: fechaHasta//,
+    // //etiquetasTiene: etiquetas       
+    // };
     let gastosFiltrados = filtrarGastos(obj);
-            console.log(gastosFiltrados);
-            console.log(gastos);
+           // console.log(gastosFiltrados);
+            //console.log(gastos);
 
     let acumulado = gastosFiltrados.reduce((acc, gastoActual) => {
-        console.log("hola");
+       // console.log("hola");
         let periodoAgrupado = gastoActual.obtenerPeriodoAgrupacion(periodo);
-        console.log(periodoAgrupado);
+        //console.log(periodoAgrupado);
         if (!acc[periodoAgrupado])
             acc[periodoAgrupado] = gastoActual.valor;
         else
@@ -240,17 +251,17 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     return acumulado;
 }
 
-let g1=new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
-let g2=new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
-let g3=new CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
+// let g1=new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
+// let g2=new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+// let g3=new CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
 
-anyadirGasto(g1);
-anyadirGasto(g2);
-anyadirGasto(g3);
+// anyadirGasto(g1);
+// anyadirGasto(g2);
+// anyadirGasto(g3);
 
-let objAgrup = agruparGastos("anyo",[],"2020-05-26","2030-05-26");
+// let objAgrup = agruparGastos("anyo",[],"2020-05-26","2030-05-26");
 
-console.log(objAgrup);
+// console.log(objAgrup);
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

@@ -78,25 +78,24 @@ function repintar(){
 let pres = document.getElementById("presupuesto");
 pres.innerHTML = "";
 let valor = gp.mostrarPresupuesto();
-mostrarDatoEnId(idElemento, valor);
+mostrarDatoEnId("presupuesto", valor);
 
 let gastTot = document.getElementById("gastos-totales");
 gastTot.innerHTML = "";
 let calcGastTot = gp.calcularTotalGastos();
-mostrarDatoEnId(idElemento, calcGastTot);
+mostrarDatoEnId("gastos-totales", calcGastTot);
 
 let balancTotal = document.getElementById("balance-total");
 balancTotal.innerHTML = "";
 let bal = gp.calcularBalance();
-mostrarDatoEnId(idElemento, bal);
+mostrarDatoEnId("balance-total", bal);
 
 let gastComp = document.getElementById("listado-gastos-completo");
 gastComp.innerHTML = "";
 let gastos = gp.listarGastos();
 for(let a of gastos){
-    mostrarGastoWeb(idElemento, a);
+    mostrarGastoWeb("listado-gastos-completo", a);
 }
-
 }
 
 export{

@@ -75,27 +75,37 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 }
 
 function repintar(){
-let pres = document.getElementById("presupuesto");
-pres.innerHTML = "";
-let valor = gp.mostrarPresupuesto();
-mostrarDatoEnId("presupuesto", valor);
+    let pres = document.getElementById("presupuesto");
+    pres.innerHTML = "";
+    let valor = gp.mostrarPresupuesto();
+    mostrarDatoEnId("presupuesto", valor);
 
-let gastTot = document.getElementById("gastos-totales");
-gastTot.innerHTML = "";
-let calcGastTot = gp.calcularTotalGastos();
-mostrarDatoEnId("gastos-totales", calcGastTot);
+    let gastTot = document.getElementById("gastos-totales");
+    gastTot.innerHTML = "";
+    let calcGastTot = gp.calcularTotalGastos();
+    mostrarDatoEnId("gastos-totales", calcGastTot);
 
-let balancTotal = document.getElementById("balance-total");
-balancTotal.innerHTML = "";
-let bal = gp.calcularBalance();
-mostrarDatoEnId("balance-total", bal);
+    let balancTotal = document.getElementById("balance-total");
+    balancTotal.innerHTML = "";
+    let bal = gp.calcularBalance();
+    mostrarDatoEnId("balance-total", bal);
 
-let gastComp = document.getElementById("listado-gastos-completo");
-gastComp.innerHTML = "";
-let gastos = gp.listarGastos();
-for(let a of gastos){
-    mostrarGastoWeb("listado-gastos-completo", a);
+    let gastComp = document.getElementById("listado-gastos-completo");
+    gastComp.innerHTML = "";
+    let gastos = gp.listarGastos();
+    for(let a of gastos){
+        mostrarGastoWeb("listado-gastos-completo", a);
+    }
 }
+
+let btnActuPres = document.getElementById("actualizarpresupuesto");
+    btnActuPres.addEventListener("click" , actualizarPresupuestoWeb);
+
+function actualizarPresupuestoWeb(){
+    let presupuesto = prompt("Introduce el presupuesto, gracias");
+    Number(presupuesto);
+    gp.actualizarPresupuesto(presupuesto);
+    repintar();
 }
 
 export{

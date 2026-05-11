@@ -33,6 +33,7 @@ function mostrarGastoWeb(idElemento, gasto){
         for (let etiqueta of gasto.etiquetas) {
             let spanEtiqueta = document.createElement("span");
             spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
+
             spanEtiqueta.textContent = etiqueta;
             divEtiquetas.appendChild(spanEtiqueta);
         }
@@ -44,7 +45,32 @@ function mostrarGastoWeb(idElemento, gasto){
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+    let elemento = document.getElementById(idElemento);
+    if(idElemento && agrup){
+        let divAgrupacion = document.createElement("div");
+        divAgrupacion.classList.add("agrupacion");
 
+        let h1 = document.createElement("h1");
+        h1.textContent = "Gastos agrupados por " + periodo;
+        divAgrupacion.appendChild(h1);
+        for(let [clave, valor] of Object.entries(agrup)){
+            let divDato = document.createElement("div");
+            divDato.classList.add("agrupacion-dato");
+
+            let spanClave = document.createElement("span");
+            spanClave.classList.add("agrupacion-dato-clave");
+            spanClave.textContent = clave;
+            divDato.appendChild(spanClave);
+
+            let spanValor = document.createElement("span");
+            spanValor.classList.add("agrupacion-dato-valor");
+            spanValor.textContent = valor;
+            divDato.appendChild(spanValor);
+
+            divAgrupacion.appendChild(divDato);
+        }
+        elemento.appendChild(divAgrupacion);
+    }
 }
 
 export{

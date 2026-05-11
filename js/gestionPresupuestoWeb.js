@@ -93,7 +93,10 @@ mostrarDatoEnId(idElemento, bal);
 let gastComp = document.getElementById("listado-gastos-completo");
 gastComp.innerHTML = "";
 let gastos = gp.listarGastos();
-mostrarGastoWeb(idElemento, gastos);
+for(let a of gastos){
+    mostrarGastoWeb(idElemento, a);
+}
+
 }
 
 export{

@@ -1,8 +1,9 @@
+import * as gp from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento, valor){
     let elemento = document.getElementById(idElemento);
     if(elemento){
-        elemento.textContent = "Tu presupuesto actual es de " + valor + " €";
+        elemento.textContent = valor;
     }
 }
 
@@ -73,8 +74,31 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     }
 }
 
+function repintar(){
+let pres = document.getElementById("presupuesto");
+pres.innerHTML = "";
+let valor = gp.mostrarPresupuesto();
+mostrarDatoEnId(idElemento, valor);
+
+let gastTot = document.getElementById("gastos-totales");
+gastTot.innerHTML = "";
+let calcGastTot = gp.calcularTotalGastos();
+mostrarDatoEnId(idElemento, calcGastTot);
+
+let balancTotal = document.getElementById("balance-total");
+balancTotal.innerHTML = "";
+let bal = gp.calcularBalance();
+mostrarDatoEnId(idElemento, bal);
+
+let gastComp = document.getElementById("listado-gastos-completo");
+gastComp.innerHTML = "";
+let gastos = gp.listarGastos();
+mostrarGastoWeb(idElemento, gastos);
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }

@@ -1,9 +1,9 @@
 import * as gpw from './gestionPresupuestoWeb.js';
 import * as gp from './gestionPresupuesto.js';
 
-gp.actualizarPresupuesto(1500);
-
-gpw.mostrarDatoEnId("presupuesto", 1500);
+let pres = gp.actualizarPresupuesto(1500);
+let dato = "Tu presupuesto actual es de " + pres + " €";
+gpw.mostrarDatoEnId("presupuesto", dato);
 
 // let gastos = [
 //     {descripcion: "Compra carne", valor: 23.44, fecha: "2021-10-06", etiquetas: ["casa", "comida"]},

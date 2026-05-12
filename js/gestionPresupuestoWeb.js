@@ -42,6 +42,15 @@ function mostrarGastoWeb(idElemento, gasto){
         divGasto.appendChild(divEtiquetas);
 
         elemento.appendChild(divGasto);
+
+        let btnEditar = document.createElement("button");
+        btnEditar.className = "gasto-editar"
+        btnEditar.textContent = "Editar";
+        divGasto.appendChild(btnEditar);
+        let objEdit = new EditarHandle();
+        objEdit.gasto = gasto;
+        btnEditar.addEventListener("click", objEdit);
+
     }
 }
 
@@ -118,10 +127,30 @@ function nuevoGastoWeb(){
     let etiq = prompt("Introduce todas las etiquetas separadas por comas, gracias");
     val = Number(val);
     let arrayEtiq = etiq.split(",");
-    let gas = gp.CrearGasto(des, val, fech, ...arrayEtiq);
+    let gas = new gp.CrearGasto(des, val, fech, ...arrayEtiq);
     gp.anyadirGasto(gas);
     repintar();
 }
+
+function EditarHandle(){
+    this.handleEvent = function(event){
+        
+        let des = prompt("Introduce la descripcion del gasto, gracias", this.gasto.descripcion);
+        let val = prompt("Introduce el valor del gasto, gracias", this.gasto.valor);
+        let fech = prompt("intoduce la fecha del gasto en formato yyyy-mm-dd, gracias", new Date(this.gasto.fecha).toISOString().slice(0,10));
+        let etiq = prompt("Introduce todas las etiquetas separadas por comas, gracias", this.gasto.etiquetas.join(","));
+        val = Number(val);
+        let arrayEtiq = etiq.split(",");
+        
+        this.gasto.actualizarDescripcion(des);
+        this.gasto.actualizarValor(val);
+        this.gasto.actualizarFecha(fech);
+        this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+        this.gasto.anyadirEtiquetas(...arrayEtiq);
+        repintar();
+    }
+}
+
 
 export{
     mostrarDatoEnId,

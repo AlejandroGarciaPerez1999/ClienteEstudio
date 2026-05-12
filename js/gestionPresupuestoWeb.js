@@ -51,6 +51,14 @@ function mostrarGastoWeb(idElemento, gasto){
         objEdit.gasto = gasto;
         btnEditar.addEventListener("click", objEdit);
 
+        let btnBorrar = document.createElement("button");
+        btnBorrar.className = "gasto-borrar"
+        btnBorrar.textContent = "Borrar";
+        divGasto.appendChild(btnBorrar);
+        let objBorrar = new BorrarHandle();
+        objBorrar.gasto = gasto;
+        btnBorrar.addEventListener("click", objBorrar);
+
     }
 }
 
@@ -151,6 +159,12 @@ function EditarHandle(){
     }
 }
 
+function BorrarHandle(){
+    this.handleEvent = function(event){
+        gp.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
 
 export{
     mostrarDatoEnId,

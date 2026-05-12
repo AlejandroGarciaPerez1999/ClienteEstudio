@@ -103,8 +103,23 @@ let btnActuPres = document.getElementById("actualizarpresupuesto");
 
 function actualizarPresupuestoWeb(){
     let presupuesto = prompt("Introduce el presupuesto, gracias");
-    Number(presupuesto);
+    presupuesto = Number(presupuesto);
     gp.actualizarPresupuesto(presupuesto);
+    repintar();
+}
+
+let btnNewGast = document.getElementById("anyadirgasto");
+btnNewGast.addEventListener("click", nuevoGastoWeb);
+
+function nuevoGastoWeb(){
+    let des = prompt("Introduce la descripcion del gasto, gracias");
+    let val = prompt("Introduce el valor del gasto, gracias");
+    let fech = prompt("intoduce la fecha del gasto en formato yyyy-mm-dd, gracias");
+    let etiq = prompt("Introduce todas las etiquetas separadas por comas, gracias");
+    val = Number(val);
+    let arrayEtiq = etiq.split(",");
+    let gas = gp.CrearGasto(des, val, fech, ...arrayEtiq);
+    gp.anyadirGasto(gas);
     repintar();
 }
 

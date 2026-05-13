@@ -37,9 +37,10 @@ function mostrarGastoWeb(idElemento, gasto){
 
             spanEtiqueta.textContent = etiqueta + " ";
 
-            let etiBorrar = new BorrarEtiquetasHandle();
-            etiBorrar = this.etiqueta;
-            spanEtiqueta.addEventListener("click", etiBorrar)
+            let objEtiBorrar = new BorrarEtiquetasHandle();
+            objEtiBorrar.etiqueta = etiqueta;
+            objEtiBorrar.gasto = gasto;
+            spanEtiqueta.addEventListener("click", objEtiBorrar)
             
             divEtiquetas.appendChild(spanEtiqueta);
         }
@@ -174,7 +175,7 @@ function BorrarHandle(){
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(event){
         let eti = this.etiqueta;
-        this.gasto.borrarEtiquetas(...this.etiqueta);
+        this.gasto.borrarEtiquetas(eti);
         repintar();
     }
 }

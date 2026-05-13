@@ -35,7 +35,12 @@ function mostrarGastoWeb(idElemento, gasto){
             let spanEtiqueta = document.createElement("span");
             spanEtiqueta.classList.add("gasto-etiquetas-etiqueta");
 
-            spanEtiqueta.textContent = etiqueta;
+            spanEtiqueta.textContent = etiqueta + " ";
+
+            let etiBorrar = new BorrarEtiquetasHandle();
+            etiBorrar.gasto = this.etiqueta;
+            spanEtiqueta.addEventListener("click", etiBorrar)
+            
             divEtiquetas.appendChild(spanEtiqueta);
         }
 
@@ -168,7 +173,9 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(event){
-        this.gasto.borrarEtiquetas(this.etiqueta);
+        let eti = this.gasto.etiquetas;
+        eti = eti.split(",");
+        this.gasto.borrarEtiquetas(...eti);
         repintar();
     }
 }

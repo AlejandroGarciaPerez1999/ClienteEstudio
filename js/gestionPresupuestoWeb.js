@@ -184,10 +184,24 @@ function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
     var formulario = plantillaFormulario.querySelector("form");
     
-    let btnSubm = document.getElementById("submit")
-    btnSubm.addEventListener("click", )
+    
+    formulario.addEventListener("submit", event =>{
+        event.preventDefault()
+        let des = formulario.descripcion.value;
+        let val = formulario.valor.value;
+        let fech = formulario.fecha.value;
+        let etiq= formulario.fecha.value;
 
-    event.preventDefault()
+        val = Number(val);
+        let arrayEtiq = etiq.split(",");
+
+        let gas = new gp.CrearGasto(des, val, fech, ...arrayEtiq);
+        gp.anyadirGasto(gas);
+        repintar();
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+    })
+
+    
 }
 
 export{

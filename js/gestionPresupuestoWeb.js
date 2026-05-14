@@ -215,7 +215,8 @@ function nuevoGastoWebFormulario(event){
         document.getElementById('anyadirgasto-formulario').disabled = false;
     })
 
-    formulario.addEventListener("click", event =>{
+    let boton = formulario.querySelector('.cancelar');
+    boton.addEventListener("click", event =>{
         formulario.remove();
         document.getElementById('anyadirgasto-formulario').disabled = false;
     })
@@ -255,9 +256,11 @@ function EditarHandleFormulario(){
             document.getElementById('anyadirgasto-formulario').disabled = false;  
         })
         
-        formulario.addEventListener("click", event =>{
-            formulario.remove;
-            document.getElementById('anyadirgasto-formulario').disabled = false;  
+        
+        let boton = formulario.querySelector('.cancelar');
+        boton.addEventListener("click", event =>{
+            document.querySelector('.gasto-editar-formulario').disabled = false;
+            formulario.remove();
         })
     } 
 }

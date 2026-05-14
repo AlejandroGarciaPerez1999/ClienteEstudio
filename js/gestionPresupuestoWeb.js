@@ -203,7 +203,7 @@ function nuevoGastoWebFormulario(event){
         let des = formulario.descripcion.value;
         let val = formulario.valor.value;
         let fech = formulario.fecha.value;
-        let etiq= formulario.etiqueta.value;
+        let etiq= formulario.etiquetas.value;
 
         val = Number(val);
         let arrayEtiq = etiq.split(",");
@@ -222,22 +222,44 @@ function nuevoGastoWebFormulario(event){
 }
 
 function EditarHandleFormulario(){
+    this.handleEvent = function(event){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form");
-    document.getElementsByClassName("gasto-editar-formulario").append(formulario);
+    event.currentTarget.parentNode.append(formulario);
+    event.currentTarget.disabled = true;
 
-    formulario.addEventListener("click", event =>{
-        event.preventDefault();
+    formulario.descripcion.value = this.gasto.descripcion;
+    formulario.valor.value = this.gasto.valor;
+    formulario.fecha.value = new Date(this.gasto.fecha).toISOString().slice(0,10);
+    formulario.etiquetas.value = this.gasto.etiquetas.join(","); 
 
-        this.handleEvent = function(event){
-        formulario.descripcion.value = this.descripcion;
-        formulario.valor.value = this.valor;
-        formulario.fecha.value = this.fecha;
-        formulario.etiqueta.value = this.etiqueta;
+        formulario.addEventListener("submit", event =>{
+            event.preventDefault();
+
+            let des = formulario.descripcion.value;
+            let val = formulario.valor.value;
+            let fech = formulario.fecha.value;
+            let etiq= formulario.etiquetas.value;
+
+            val = Number(val);
+            let arrayEtiq = etiq.split(",");
+            
+            this.gasto.actualizarDescripcion(des);
+            this.gasto.actualizarValor(val);
+            this.gasto.actualizarFecha(fech);
+            this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+            this.gasto.anyadirEtiquetas(...arrayEtiq);
+            
+            repintar();        
+            formulario.remove();
+            document.getElementById('anyadirgasto-formulario').disabled = false;  
+        })
         
-        }
-        
-    }   
+        formulario.addEventListener("click", event =>{
+            formulario.remove;
+            document.getElementById('anyadirgasto-formulario').disabled = false;  
+        })
+    } 
 }
 
 export{

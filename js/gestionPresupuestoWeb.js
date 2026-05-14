@@ -183,13 +183,13 @@ let btn = document.getElementById("anyadirgasto-formulario");
     btn.addEventListener("click", nuevoGastoWebFormulario);
 
 
-function nuevoGastoWebFormulario(){
+function nuevoGastoWebFormulario(event){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
     let formulario = plantillaFormulario.querySelector("form");
     document.getElementById("controlesprincipales").append(formulario);
-
+    //document.getElementById('anyadirgasto-formulario').disabled = true;
+    event.currentTarget.disabled = true;
     
-
     formulario.addEventListener("submit", event =>{
         event.preventDefault()
         
@@ -203,13 +203,17 @@ function nuevoGastoWebFormulario(){
 
         let gas = new gp.CrearGasto(des, val, fech, ...arrayEtiq);
         gp.anyadirGasto(gas);
-        repintar();
-        //document.getElementById('anyadirgasto-formulario').disabled = false;
-        document.getElementById("formulario-template").remove();
+        repintar();        
+        formulario.remove();
+        document.getElementById('anyadirgasto-formulario').disabled = false;
     })
 
-    
+    formulario.addEventListener("click", event =>{
+        formulario.remove();
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+    })
 }
+
 
 export{
     mostrarDatoEnId,

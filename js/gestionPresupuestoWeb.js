@@ -179,14 +179,20 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+let btn = document.getElementById("anyadirgasto-formulario");
+    btn.addEventListener("click", nuevoGastoWebFormulario);
+
 
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
-    var formulario = plantillaFormulario.querySelector("form");
+    let formulario = plantillaFormulario.querySelector("form");
+    document.getElementById("controlesprincipales").append(formulario);
+
     
-    
+
     formulario.addEventListener("submit", event =>{
         event.preventDefault()
+        
         let des = formulario.descripcion.value;
         let val = formulario.valor.value;
         let fech = formulario.fecha.value;
@@ -198,7 +204,8 @@ function nuevoGastoWebFormulario(){
         let gas = new gp.CrearGasto(des, val, fech, ...arrayEtiq);
         gp.anyadirGasto(gas);
         repintar();
-        document.getElementById('anyadirgasto-formulario').disabled = false;
+        //document.getElementById('anyadirgasto-formulario').disabled = false;
+        document.getElementById("formulario-template").remove();
     })
 
     

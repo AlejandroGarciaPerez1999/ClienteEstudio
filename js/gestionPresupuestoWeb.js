@@ -166,7 +166,7 @@ function EditarHandle(){
         this.gasto.actualizarDescripcion(des);
         this.gasto.actualizarValor(val);
         this.gasto.actualizarFecha(fech);
-        this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+        this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
         this.gasto.anyadirEtiquetas(...arrayEtiq);
         repintar();
     }
@@ -227,6 +227,7 @@ function EditarHandleFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form");
     event.currentTarget.parentNode.append(formulario);
+    let btnEditForm = event.currentTarget;
     event.currentTarget.disabled = true;
 
     formulario.descripcion.value = this.gasto.descripcion;
@@ -248,7 +249,7 @@ function EditarHandleFormulario(){
             this.gasto.actualizarDescripcion(des);
             this.gasto.actualizarValor(val);
             this.gasto.actualizarFecha(fech);
-            this.gasto.borrarEtiquetas(this.gasto.etiquetas);
+            this.gasto.borrarEtiquetas(...this.gasto.etiquetas);
             this.gasto.anyadirEtiquetas(...arrayEtiq);
             
             repintar();        
@@ -259,7 +260,7 @@ function EditarHandleFormulario(){
         
         let boton = formulario.querySelector('.cancelar');
         boton.addEventListener("click", event =>{
-            document.querySelector('.gasto-editar-formulario').disabled = false;
+            btnEditForm.disabled = false;
             formulario.remove();
         })
     } 

@@ -266,47 +266,45 @@ function EditarHandleFormulario(){
     } 
 }
 
+let form = document.getElementById("formulario-filtrado");
+form.addEventListener("submit", filtrarGastosWeb);
+
 function filtrarGastosWeb(event){
-    let form = document.getElementById("formulario-filtrado");
-    form.addEventListener("submit", event =>{
+    event.preventDefault();
+
+    let des = document.getElementById("formulario-filtrado-descripcion");
+    let valMin = document.getElementById("formulario-filtrado-valor-minimo");
+    let valMax = document.getElementById("formulario-filtrado-valor-maximo");
+    let fechaDes = document.getElementById("formulario-filtrado-fecha-desde");
+    let fechaHas = document.getElementById("formulario-filtrado-fecha-hasta");
+    let etisTiene = document.getElementById("formulario-filtrado-etiquetas-tiene");
+
+    valMin = Number(valMin);
+    valMax = Number(valMax);
+
+    fechaDes = new Date(fechaDes).toISOString().slice(0,10);
+    fechaHas = new Date(fechaHas).toISOString().slice(0,10);
     
-        event.preventDefault();
+    if(etisTiene != ""){
+        etisTiene = gp.transformarListadoEtiquetas(etisTiene); 
+    }
 
-        let des = document.getElementById("formulario-filtrado-descripcion");
-        let valMin = document.getElementById("formulario-filtrado-valor-minimo");
-        let valMax = document.getElementById("formulario-filtrado-valor-maximo");
-        let fechaDes = document.getElementById("formulario-filtrado-fecha-desde");
-        let fechaHas = document.getElementById("formulario-filtrado-fecha-hasta");
-        let etisTiene = document.getElementById("formulario-filtrado-etiquetas-tiene");
+    let miObjeto = {};
+    miObjeto.fechaDesde = fechaDes;
+    miObjeto.fechaHasta = fechaHas;
+    miObjeto.valorMinimo = valMin;
+    miObjeto.valorMaximo = valMax;
+    miObjeto.descripcionContiene = des;
 
-        valMin = Number(valMin);
-        valMax = Number(valMax);
+    let arrGastosFilt = [];
+    arrGastosFilt = gp.filtrarGastos(miObjeto);
 
-        fechaDes = new Date(fechaDes).toISOString().slice(0,10);
-        fechaHas = new Date(fechaHas).toISOString().slice(0,10);
-        
-        if(etisTiene != ""){
-            etisTiene = gp.transformarListadoEtiquetas(etisTiene); 
-        }
+    let gastComp = document.getElementById("listado-gastos-completo");
+    gastComp.innerHTML = "";
 
-        let miObjeto = {};
-        miObjeto.fechaDesde = fechaDes;
-        miObjeto.fechaHasta = fechaHas;
-        miObjeto.valorMinimo = valMin;
-        miObjeto.valorMaximo = valMax;
-        miObjeto.descripcionContiene = des;
-
-        let arrGastosFilt = [];
-        arrGastosFilt = gp.filtrarGastos(miObjeto);
-
-        let gastComp = document.getElementById("listado-gastos-completo");
-        gastComp.innerHTML = "";
-
-        for(gasto of arrGastosFilt){
-            mostrarGastoWeb(gastComp, gasto);
-        }
-
-    })
+    for(gasto of arrGastosFilt){
+        mostrarGastoWeb(gastComp, gasto);
+    }
 }
 
 export{

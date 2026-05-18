@@ -234,11 +234,24 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
         if (!acc[periodoAgrupado])
             acc[periodoAgrupado] = gastoActual.valor;
         else
-            acc[periodoAgrupado] += gastoActual.valor
+            acc[periodoAgrupado] += gastoActual.valor;
         return acc;
     },{});
     return acumulado;
 }
+
+function transformarListadoEtiquetas(texto){
+    if (!texto){
+        return [];
+    }
+
+    let separadores = /[,\.\:;\s]+/;
+
+    texto = texto.split(separadores);
+    
+    return texto;
+}
+
 
 // let g1=new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 // let g2=new CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -264,5 +277,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }

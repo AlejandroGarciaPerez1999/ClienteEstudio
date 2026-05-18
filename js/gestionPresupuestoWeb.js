@@ -266,6 +266,13 @@ function EditarHandleFormulario(){
     } 
 }
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,

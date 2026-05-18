@@ -20,7 +20,7 @@ function mostrarGastoWeb(idElemento, gasto){
         
         let divFecha = document.createElement("div");
         divFecha.classList.add("gasto-fecha");
-        divFecha.textContent = gasto.fecha;
+        divFecha.textContent = new Date(gasto.fecha).toISOString().slice(0,10);
         divGasto.appendChild(divFecha);
 
         let divValor = document.createElement("div");
@@ -272,18 +272,18 @@ form.addEventListener("submit", filtrarGastosWeb);
 function filtrarGastosWeb(event){
     event.preventDefault();
 
-    let des = document.getElementById("formulario-filtrado-descripcion");
-    let valMin = document.getElementById("formulario-filtrado-valor-minimo");
-    let valMax = document.getElementById("formulario-filtrado-valor-maximo");
-    let fechaDes = document.getElementById("formulario-filtrado-fecha-desde");
-    let fechaHas = document.getElementById("formulario-filtrado-fecha-hasta");
-    let etisTiene = document.getElementById("formulario-filtrado-etiquetas-tiene");
+    let des = document.getElementById("formulario-filtrado-descripcion").value;
+    let valMin = document.getElementById("formulario-filtrado-valor-minimo").value;
+    let valMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+    let fechaDes = document.getElementById("formulario-filtrado-fecha-desde").value;
+    let fechaHas = document.getElementById("formulario-filtrado-fecha-hasta").value;
+    let etisTiene = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
 
     valMin = Number(valMin);
     valMax = Number(valMax);
 
-    fechaDes = new Date(fechaDes).toISOString().slice(0,10);
-    fechaHas = new Date(fechaHas).toISOString().slice(0,10);
+    // fechaDes = Date.parse(fechaDes);
+    // fechaHas = Date.parse(fechaHas);
     
     if(etisTiene != ""){
         etisTiene = gp.transformarListadoEtiquetas(etisTiene); 
@@ -295,6 +295,7 @@ function filtrarGastosWeb(event){
     miObjeto.valorMinimo = valMin;
     miObjeto.valorMaximo = valMax;
     miObjeto.descripcionContiene = des;
+    miObjeto.etiquetasTiene = etisTiene;
 
     let arrGastosFilt = [];
     arrGastosFilt = gp.filtrarGastos(miObjeto);
@@ -302,8 +303,8 @@ function filtrarGastosWeb(event){
     let gastComp = document.getElementById("listado-gastos-completo");
     gastComp.innerHTML = "";
 
-    for(gasto of arrGastosFilt){
-        mostrarGastoWeb(gastComp, gasto);
+    for(let gasto of arrGastosFilt){
+        mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 }
 

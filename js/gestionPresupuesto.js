@@ -246,7 +246,7 @@ function transformarListadoEtiquetas(texto){
     }
 
     let separadores = /[,\.\:;\s]+/g;
-
+    // texto = String(texto);
     texto = texto.split(separadores);
     
     return texto;

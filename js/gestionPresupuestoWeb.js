@@ -312,13 +312,27 @@ let btnGuardarGastos = document.getElementById("guardar-gastos");
 btnGuardarGastos.addEventListener("click", guardarGastosWeb);
 
 function guardarGastosWeb(){
-    const listado = gp.listarGastos();
+    let listado = gp.listarGastos();
 
     localStorage.setItem('GestorGastosDWEC', JSON.stringify(listado));
 }
 
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.addEventListener("click", cargarGastosWeb);
+
 function cargarGastosWeb(){
-    
+let datosJSON = localStorage.getItem('GestorGastosDWEC');
+
+let arrayGastos;
+if (datosJSON) {
+    arrayGastos = JSON.parse(datosJSON);
+} else {
+    arrayGastos = [];
+}
+
+gp.cargarGastos(arrayGastos);
+
+repintar();
 }
 
 export{

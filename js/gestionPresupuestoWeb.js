@@ -70,7 +70,9 @@ function mostrarGastoWeb(idElemento, gasto){
         btnBorrarApi.className = "gasto-borrar-api"
         btnBorrarApi.textContent = "Borrar (API)";
         divGasto.appendChild(btnBorrarApi);
-
+        let objBorrarApi = new BorrarApiHandle();
+        objBorrarApi.gasto = gasto;
+        btnBorrarApi.addEventListener("click", objBorrarApi);
 
         let btnEditarForm = document.createElement("button");
         btnEditarForm.className = "gasto-editar-formulario"
@@ -356,14 +358,43 @@ async function cargarGastosApi(){
         }
         let gastosApi = await response.json();
         gp.cargarGastos(gastosApi);
-        repintar;
+        repintar();
     }
     catch (error){
         console.error(error);
     }
 }
 
+function BorrarApiHandle(){
+    this.handleEvent = async function(event){
+        let nombreUsu = document.getElementById("nombre_usuario").value;
+        let url = ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu);
 
+        let options = {
+            method: "DELETE"
+        };
+
+        try{
+            let response = await fetch(url, options);
+
+            if (!response.ok){
+                throw new Error('Error al eliminar');
+            } 
+
+            // Muchas APIs devuelven 204 No Content (sin body)
+            if (response.status === 204) {
+                console.log('Eliminado correctamente');
+                return;
+            }
+            let resultado = await response.json();
+            console.log('Eliminado:', resultado);
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    cargarGastosApi();
+}
 
 export{
     mostrarDatoEnId,

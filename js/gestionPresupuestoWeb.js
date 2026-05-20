@@ -368,7 +368,7 @@ async function cargarGastosApi(){
 function BorrarApiHandle(){
     this.handleEvent = async function(event){
         let nombreUsu = document.getElementById("nombre_usuario").value;
-        let url = ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu + this.gasto.id);
+        let url = ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu + "/" + this.gasto.gastoId);
 
         let options = {
             method: "DELETE"
@@ -388,12 +388,13 @@ function BorrarApiHandle(){
             }
             let resultado = await response.json();
             console.log('Eliminado:', resultado);
+            cargarGastosApi();
         }
         catch(error){
             console.error(error);
         }
     }
-    cargarGastosApi();
+    
 }
 
 export{

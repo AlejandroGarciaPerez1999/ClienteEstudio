@@ -65,6 +65,13 @@ function mostrarGastoWeb(idElemento, gasto){
         objBorrar.gasto = gasto;
         btnBorrar.addEventListener("click", objBorrar);
 
+
+        let btnBorrarApi = document.createElement("button");
+        btnBorrarApi.className = "gasto-borrar-api"
+        btnBorrarApi.textContent = "Borrar (API)";
+        divGasto.appendChild(btnBorrarApi);
+
+
         let btnEditarForm = document.createElement("button");
         btnEditarForm.className = "gasto-editar-formulario"
         btnEditarForm.textContent = "Editar (formulario)";
@@ -339,21 +346,24 @@ let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
 btnCargarGastosApi.addEventListener("click", cargarGastosApi);
 
 async function cargarGastosApi(){
-let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/alejandrogarcia";
+    let nombreUsu = document.getElementById("nombre_usuario").value;
+    let url = ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu);
 
-try{
-    let response = await fetch(url);
-    if(!response.ok){
-        throw new Error("Error en la petición");
+    try{
+        let response = await fetch(url);
+        if(!response.ok){
+            throw new Error("Error en la petición");
+        }
+        let gastosApi = await response.json();
+        gp.cargarGastos(gastosApi);
+        repintar;
     }
-    let gastosApi = await response.json();
-    gp.cargarGastos(gastosApi);
-    repintar;
+    catch (error){
+        console.error(error);
+    }
 }
-catch (error){
-    console.error(error);
-}
-}
+
+
 
 export{
     mostrarDatoEnId,

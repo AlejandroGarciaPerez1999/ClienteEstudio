@@ -229,6 +229,48 @@ function nuevoGastoWebFormulario(event){
         formulario.remove();
         document.getElementById('anyadirgasto-formulario').disabled = false;
     })
+
+    let btnEnvApi = formulario.querySelector(".gasto-enviar-api");
+
+    btnEnvApi.addEventListener("click", async event => {
+        event.preventDefault();
+        let nombreUsu = document.getElementById("nombre_usuario").value;
+
+        let url = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu;
+
+        let datos = {
+            descripcion: formulario.descripcion.value,
+            valor: Number(formulario.valor.value),
+            fecha: formulario.fecha.value,
+            etiquetas: formulario.etiquetas.value.split(",")
+        };
+
+        const options = {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos) // Convertir objeto a JSON string
+        };
+        try{
+            let response = await fetch(url, options);
+
+            if (!response.ok){
+                throw new Error('Error al crear');
+            }
+            
+            let resultado = await response.json();
+            console.log("Creado: ", resultado);
+
+            formulario.remove();
+            document.getElementById("anyadirgasto-formulario").disabled = false;
+
+            cargarGastosApi();
+        }
+        catch(error){
+            console.error(error);
+        }
+    })
 }
 
 function EditarHandleFormulario(){
@@ -266,11 +308,52 @@ function EditarHandleFormulario(){
             document.getElementById('anyadirgasto-formulario').disabled = false;  
         })
         
-        
         let boton = formulario.querySelector('.cancelar');
         boton.addEventListener("click", event =>{
             btnEditForm.disabled = false;
             formulario.remove();
+        })
+
+        let btnEnvApi = formulario.querySelector(".gasto-enviar-api");
+
+        btnEnvApi.addEventListener("click", async event => {
+            event.preventDefault();
+
+            let nombreUsu = document.getElementById("nombre_usuario").value;
+            let url = ("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsu + "/" + this.gasto.gastoId);
+
+            let datos = {
+                descripcion: formulario.descripcion.value,
+                valor: Number(formulario.valor.value),
+                fecha: formulario.fecha.value,
+                etiquetas: formulario.etiquetas.value.split(",")
+            };
+
+            let options = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            };
+            try {
+                let response = await fetch(url, options);
+
+                if(!response.ok){
+                    throw new Error("Error al actualizar");
+                }
+
+                let resultado = await response.json();
+                console.log("Actualizado: ", resultado);
+
+                formulario.remove();
+                btnEditForm.disabled = false;
+
+                cargarGastosApi();
+            } 
+            catch(error){
+                console.error(error);
+            }
         })
     } 
 }
@@ -394,7 +477,6 @@ function BorrarApiHandle(){
             console.error(error);
         }
     }
-    
 }
 
 export{
